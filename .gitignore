@@ -1,0 +1,5 @@
+
+.idea/
+assets/__pycache__/
+FrameworkBaseClasses/__pycache__/
+FrameworkImplementations/__pycache__/
