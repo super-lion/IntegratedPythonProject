@@ -1,5 +1,6 @@
 from FrameworkBaseClasses.TraderBaseClass import TraderBaseClass
 from assets import constants as Constant
+from assets import ProjectFunctions
 
 from datetime import datetime
 import sys as SystemObj
@@ -146,7 +147,7 @@ class TraderClass(TraderBaseClass):
                     self.placeMarketOrder('sell')
 
             if self.CurrentSystemVariables['CurrentAccountPositionSize'] == 0:
-                PositionSizeFloat = format(self.getOrderQuantity(), '.6f')
+                PositionSizeFloat = ProjectFunctions.truncateFloat(self.getOrderQuantity(), Constant.ORDER_QUANTITY_PRECISION)
                 if self.CurrentSystemVariables['CurrentPrice'] > self.IndicatorsObj['SMA']['value']:
                     self.placeMarketOrder('buy', PositionSizeFloat)
                 elif self.CurrentSystemVariables['CurrentPrice'] < self.IndicatorsObj['SMA']['value']:
@@ -171,7 +172,7 @@ class TraderClass(TraderBaseClass):
             self.CustomVariables['OpenPositions'] = []
 
         self.OpenOrderCountInt = self.countOpenOrders()
-        PositionSizeInt = format(self.getOrderQuantity(), '.6f')
+        PositionSizeInt = ProjectFunctions.truncateFloat(self.getOrderQuantity(), Constant.ORDER_QUANTITY_PRECISION)
 
         if self.CurrentSystemVariables['CurrentAccountPositionSize'] != 0 and len(self.CustomVariables['OpenPositions']) == 0:
             if self.CurrentSystemVariables['CurrentAccountPositionSize'] > 0:
