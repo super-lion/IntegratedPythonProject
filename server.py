@@ -31,7 +31,7 @@ def print_test():
     Send a POST request to {environment}.tradebotinc.pagekite.me/api/place_trade with a JSON payload
     containing the necessary information to authenticate and execute the request
     """
-    payload = request.get_json(request)
+    payload = request.get_json(False)
     ManagerClassObj.processPlaceTradeApiRequest(payload)
     return ("", 200, None)
 
