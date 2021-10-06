@@ -117,7 +117,7 @@ class TraderBaseClass(ProcessBaseClass):
 
     def placeClosingOrder(self, OrderSideStr, IndicatorNameStr='SMA'):
         OrderParameterObj = {}
-        OrderQuantityInt = format(abs(self.CurrentSystemVariables['CurrentAccountPositionSize']), '.8f')
+        OrderQuantityInt = ProjectFunctions.truncateFloat(abs(self.CurrentSystemVariables['CurrentAccountPositionSize']), Constant.ORDER_QUANTITY_PRECISION)
         for iterator in range(0, Constant.RETRY_LIMIT):
             try:
                 if self.ExchangeConnectionDetails['ExchangeName'] == Constant.BINANCE_EXCHANGE_ID:
@@ -192,7 +192,7 @@ class TraderBaseClass(ProcessBaseClass):
     def placeOpeningOrders(self):
         UpperLimitArr = [self.IndicatorsObj['BB']['upper'], self.IndicatorsObj['RSI']['upper']]
         LowerLimitArr = [self.IndicatorsObj['BB']['lower'], self.IndicatorsObj['RSI']['lower']]
-        OrderQuantityInt = format(self.getOrderQuantity(), '.6f')
+        OrderQuantityInt = ProjectFunctions.truncateFloat(self.getOrderQuantity(), Constant.ORDER_QUANTITY_PRECISION)
 
         for iterator in range(0, Constant.RETRY_LIMIT):
             try:
@@ -330,7 +330,7 @@ class TraderBaseClass(ProcessBaseClass):
 
     def placeMarketOrder(self, OrderSideStr, QuantityInt=None, BorrowBool=False):
         if QuantityInt is None:
-            QuantityInt = abs(self.CurrentSystemVariables['CurrentAccountPositionSize'])
+            QuantityInt = ProjectFunctions.truncateFloat(abs(self.CurrentSystemVariables['CurrentAccountPositionSize']), Constant.ORDER_QUANTITY_PRECISION)
         for iterator in range(0, Constant.RETRY_LIMIT):
             try:
                 if self.ExchangeConnectionDetails['ExchangeName'] == Constant.BINANCE_EXCHANGE_ID:
@@ -480,11 +480,10 @@ class TraderBaseClass(ProcessBaseClass):
         if not self.checkTradingState():
             return
         # endregion
-
         if PayloadObj['TradeAction'] == 'close':
-            OrderQuantityInt = self.CurrentSystemVariables['CurrentAccountPositionSize']
+            OrderQuantityInt = ProjectFunctions.truncateFloat(self.CurrentSystemVariables['CurrentAccountPositionSize'], Constant.ORDER_QUANTITY_PRECISION)
         else:
-            OrderQuantityInt = format(self.getOrderQuantity(), '.6f')
+            OrderQuantityInt = ProjectFunctions.truncateFloat(self.getOrderQuantity(), Constant.ORDER_QUANTITY_PRECISION)
 
         for iterator in range(0, Constant.RETRY_LIMIT):
             try:
@@ -554,10 +553,9 @@ class TraderBaseClass(ProcessBaseClass):
             return
         # endregion
         if PayloadObj['TradeAction'] == 'close':
-            OrderQuantityInt = self.CurrentSystemVariables['CurrentAccountPositionSize']
+            OrderQuantityInt = ProjectFunctions.truncateFloat(abs(self.CurrentSystemVariables['CurrentAccountPositionSize']), Constant.ORDER_QUANTITY_PRECISION)
         else:
-            OrderQuantityInt = format(self.getOrderQuantity(), '.6f')
-
+            OrderQuantityInt = ProjectFunctions.truncateFloat(self.getOrderQuantity(), Constant.ORDER_QUANTITY_PRECISION)
         for iterator in range(0, Constant.RETRY_LIMIT):
             try:
                 self.ExchangeConnectionObj.sapi_post_margin_order({

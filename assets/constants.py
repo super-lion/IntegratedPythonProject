@@ -36,8 +36,9 @@ SECOND_FUNDING_HOUR = 12
 THIRD_FUNDING_HOUR = 20
 
 # System related setting variables
-RETRY_LIMIT = 5
+RETRY_LIMIT = 1
 TRADE_LIMITING_SPECIFICATION_ARR = [[60, 20], [2, 4]]
+ORDER_QUANTITY_PRECISION = 5
 
 # Algorithm name related variables
 EMA_ALGORITHM_V1 = 'ema_v1'
