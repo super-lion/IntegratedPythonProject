@@ -278,7 +278,7 @@ class ManagerClass(ManagerBaseClass):
         return TraderObj
 
     def verifyPayload(self, PayloadObj):
-        VerificationArr = ['ApiSecret', 'ApiKey', 'TradeAction', 'TradeDirection', 'TradeType', 'Price', 'SideEffect']
+        VerificationArr = ['InstanceIdentifier', 'TradeAction', 'TradeDirection', 'TradeType', 'Price', 'SideEffect']
 
         for RequiredAttribute in VerificationArr:
             try:
