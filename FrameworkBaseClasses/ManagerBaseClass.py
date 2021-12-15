@@ -120,7 +120,7 @@ class ManagerBaseClass(ProcessBaseClass):
             self.DatabaseConnectionDetails['Password'] = EnvironmentDetails.MULTIPLE_ALGORITHM_PASSWORD
 
     def authenticateWebhookRequest(self, PayloadObj):
-        ResultObj = self.getWebhookAlgorithmConfigurationObj(PayloadObj['ApiSecret'], PayloadObj['ApiKey'])
+        ResultObj = self.getWebhookAlgorithmConfigurationObj(PayloadObj['InstanceIdentifier'])
         if len(ResultObj) < 1:
             return False
         self.AlgorithmConfigurationObj = ResultObj[0]
@@ -350,15 +350,14 @@ class ManagerBaseClass(ProcessBaseClass):
     # endregion
 
     # region Functions used to retrieve information from the database
-    def getWebhookAlgorithmConfigurationObj(self, ApiSecretStr, ApiKeyStr):
+    def getWebhookAlgorithmConfigurationObj(self, InstanceIdentifier):
         # print("get Webhook Obj")
-        QueryStr = """Select * From AlgorithmConfiguration Where ApiSecret = %s And ApiKey = %s"""
+        QueryStr = """Select * From AlgorithmConfiguration Where InstanceIdentifier = %s"""
 
         QueryData = (
-            ApiSecretStr,
-            ApiKeyStr,
+            InstanceIdentifier,
         )
 
-        return self.templateDatabaseRetriever(QueryStr, QueryData, "getAlgorithmConfigurationObj")
+        return self.templateDatabaseRetriever(QueryStr, QueryData, "getWebhookAlgorithmConfigurationObj")
 
     # endregion
